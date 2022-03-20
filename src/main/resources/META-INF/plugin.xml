@@ -2,6 +2,8 @@
 <idea-plugin>
     <id>com.github.paulinasadowska.localinspectionkotlinexample</id>
     <name>LocalInspectionKotlinExample</name>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.java</depends>
     <vendor>paulinasadowska</vendor>
 
     <depends>com.intellij.modules.platform</depends>
