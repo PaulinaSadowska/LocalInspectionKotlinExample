@@ -5,10 +5,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.kotlin.nj2k.postProcessing.resolve
-import org.jetbrains.kotlin.psi.KtCallExpression
-import org.jetbrains.kotlin.psi.KtNameReferenceExpression
-import org.jetbrains.kotlin.psi.KtNamedFunction
-import org.jetbrains.kotlin.psi.KtVisitorVoid
+import org.jetbrains.kotlin.psi.*
 
 class AnnotationSampleInspection : LocalInspectionTool() {
 
@@ -24,18 +21,26 @@ class AnnotationSampleInspectionVisitor(
 
     override fun visitCallExpression(expression: KtCallExpression) {
         super.visitCallExpression(expression)
-        expression.findCalleeNamedFunction()?.let {
-            holder.registerProblem(
-                expression as PsiElement,
-                "function call: ${it.name}"
-            )
-        }
+        expression.findCalleeNamedFunction()
+            ?.findAnnotationEntry("MyAnnotation")
+            ?.let { annotation ->
+                holder.registerProblem(
+                    expression as PsiElement,
+                    "function call with annotation: ${annotation.shortName}"
+                )
+            }
 
     }
 
     private fun KtCallExpression.findCalleeNamedFunction(): KtNamedFunction? {
         return calleeExpression?.let {
             (it as? KtNameReferenceExpression)?.resolve() as? KtNamedFunction
+        }
+    }
+
+    private fun KtNamedFunction.findAnnotationEntry(annotationToFindClassName: String): KtAnnotationEntry? {
+        return annotationEntries.find {
+            it.shortName?.identifier == annotationToFindClassName
         }
     }
 }
