@@ -6,13 +6,4 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.paulinasadowska.localinspectionkotlinexample.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.paulinasadowska.localinspectionkotlinexample.services.MyProjectService"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.paulinasadowska.localinspectionkotlinexample.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
