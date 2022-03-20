@@ -23,10 +23,11 @@ class AnnotationSampleInspectionVisitor(
         super.visitCallExpression(expression)
         expression.findCalleeNamedFunction()
             ?.findAnnotationEntry("MyAnnotation")
-            ?.let { annotation ->
+            ?.findStringArgumentValue()
+            ?.let { message ->
                 holder.registerProblem(
                     expression as PsiElement,
-                    "function call with annotation: ${annotation.shortName}"
+                    "Function call with MyAnnotation. Message: \"$message\""
                 )
             }
 
@@ -41,6 +42,13 @@ class AnnotationSampleInspectionVisitor(
     private fun KtNamedFunction.findAnnotationEntry(annotationToFindClassName: String): KtAnnotationEntry? {
         return annotationEntries.find {
             it.shortName?.identifier == annotationToFindClassName
+        }
+    }
+
+    private fun KtAnnotationEntry.findStringArgumentValue(): String? {
+        val argumentExpression = valueArguments.firstOrNull()?.getArgumentExpression()
+        return (argumentExpression as? KtStringTemplateExpression)?.let { stringTemplate ->
+            stringTemplate.entries.joinToString(separator = "") { (it as? KtLiteralStringTemplateEntry)?.text ?: "" }
         }
     }
 }
