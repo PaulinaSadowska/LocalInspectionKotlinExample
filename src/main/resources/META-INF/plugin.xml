@@ -8,4 +8,13 @@
 
     <depends>com.intellij.modules.platform</depends>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection language="kotlin"
+                         displayName="Inspection basics"
+                         groupName="Example inspections"
+                         groupPath="Kotlin"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.paulinasadowska.localinspectionkotlinexample.AnnotationInspection"/>
+    </extensions>
 </idea-plugin>
