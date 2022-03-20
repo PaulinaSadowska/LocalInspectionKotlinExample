@@ -15,6 +15,6 @@
                          groupPath="Kotlin"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="com.github.paulinasadowska.localinspectionkotlinexample.AnnotationInspection"/>
+                         implementationClass="com.github.paulinasadowska.localinspectionkotlinexample.AnnotationSampleInspection"/>
     </extensions>
 </idea-plugin>
